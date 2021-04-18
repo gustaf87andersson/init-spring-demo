@@ -1,18 +1,15 @@
 package com.example.services;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.entities.Student;
 import com.example.repositories.StudentInMemoryRepo;
+import com.example.requests.AddStudentRequest;
 
 @Service
 public class StudentService {
@@ -24,19 +21,26 @@ public class StudentService {
 		return studentRepo.getAll();		
 	}
 	
-	public Student getById(int id) {
+	public Student getById(UUID id) {
 		return studentRepo.getById(id);
 	}
 	
-	public Student addNewStudent(Student student) {		
+	public Student addNewStudent(AddStudentRequest request) {
+		var student = new Student();
+		student.setId(UUID.randomUUID());
+		student.setFirstName(request.getFirstName());
+		student.setLastName(request.getLastName());
+		student.setCreatedAt(new Date());
+		
 		return studentRepo.addNewStudent(student);
 	}
 	
-	public Student updateStudent(int id, Student updatedStudent) {		
-		return studentRepo.updateStudent(id, updatedStudent);
+	public Student updateStudent(UUID id, Student student) {
+		student.setUpdatedAt(new Date());
+		return studentRepo.updateStudent(id, student);
 	}
 	
-	public void deleteStudent(int id) {
+	public void deleteStudent(UUID id) {
 		studentRepo.deleteStudent(id);
 	}
 	

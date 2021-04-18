@@ -3,6 +3,7 @@ package com.example.repositories;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,13 +18,13 @@ import com.example.entities.Student;
 @Service
 public class StudentInMemoryRepo {
 	
-	Map<Integer, Student> students = new HashMap<Integer, Student>();
+	Map<UUID, Student> students = new HashMap<UUID, Student>();
 	
 	public Collection<Student> getAll() {		
 		return students.values();		
 	}
 	
-	public Student getById(int id) {
+	public Student getById(UUID id) {
 		return students.get(id);
 	}
 	
@@ -32,14 +33,14 @@ public class StudentInMemoryRepo {
 		return student;
 	}
 	
-	public Student updateStudent(int id, Student updatedStudent) {		
+	public Student updateStudent(UUID id, Student updatedStudent) {		
 		Student student = students.get(id);
 		student.setFirstName(updatedStudent.getFirstName());
 		student.setLastName(updatedStudent.getLastName());		
 		return student;
 	}
 	
-	public void deleteStudent(int id) {
+	public void deleteStudent(UUID id) {
 		students.remove(id);
 	}	
 

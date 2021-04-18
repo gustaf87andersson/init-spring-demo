@@ -1,26 +1,38 @@
 package com.example.entities;
 
+import java.util.Date;
+import java.util.UUID;
+
 public class Student {
 
-	public Student() {		
-	}
-	
-	public Student(int id, String firstName, String lastName) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
-	
-	private int id;
+	private UUID id;
 	private String firstName;
 	private String lastName;
+	private Date createdAt;
+	private Date UpdatedAt;
 	
 	
-	public int getId() {
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return UpdatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		UpdatedAt = updatedAt;
+	}
+
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
