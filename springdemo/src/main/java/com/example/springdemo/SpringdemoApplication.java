@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"com.example.controllers"})
+@ComponentScan({"com.example.controllers", "com.example.services", "com.example.repositories"})
 public class SpringdemoApplication {
 
 	public static void main(String[] args) {

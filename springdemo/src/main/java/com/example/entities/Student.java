@@ -1,26 +1,22 @@
 package com.example.entities;
 
-public class Student {
+import java.util.Date;
+import java.util.UUID;
 
-	public Student() {		
-	}
-	
-	public Student(int id, String firstName, String lastName) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
-	
-	private int id;
+public class Student {
+		
+	private UUID id;
 	private String firstName;
 	private String lastName;
+	private Date createdAt;
+	private Date updatedAt;
 	
-	
-	public int getId() {
+
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
@@ -38,6 +34,22 @@ public class Student {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}	
+	}
+	
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 	
 }
