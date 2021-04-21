@@ -1,8 +1,6 @@
 package com.example.controllers;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,9 @@ import com.example.requests.AddStudentRequest;
 import com.example.requests.UpdateStudentRequest;
 import com.example.services.StudentService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
 @RequestMapping("/api/students/")
 public class StudentsController {
@@ -28,12 +29,17 @@ public class StudentsController {
 	
 	
 	@GetMapping("/")
+	@ApiOperation(
+			value = "Get all Students",
+			notes = "Fetches all students in Students API",
+			response = Student.class,
+			responseContainer = "List")
 	public Collection<Student> getAll() {		
 		return studentService.getAll();		
 	}
 	
 	@GetMapping("/{id}")
-	public Student getById(@PathVariable UUID id) {
+	public Student getById(@ApiParam(value = "Id of the Student", required = true) @PathVariable UUID id) {
 		return studentService.getById(id);
 	}
 	
