@@ -1,6 +1,7 @@
 package com.example.entities;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import io.swagger.annotations.ApiModel;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Student {
-		
+
 	@ApiModelProperty(notes = "The unique identifier of an Student")
 	private UUID id;
 	@ApiModelProperty(notes = "The FirstName of the Student")
@@ -23,5 +24,11 @@ public class Student {
 	private Date createdAt;
 	@ApiModelProperty(notes = "The date the student was last updated")
 	private Date updatedAt;
-	
+
+	// one.to.one
+	private Address address;
+
+	// many.to.one
+	private List<Course> courses;
+
 }
