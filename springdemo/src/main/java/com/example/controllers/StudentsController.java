@@ -1,7 +1,8 @@
 package com.example.controllers;
 
 import java.util.Collection;
-import java.util.UUID;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class StudentsController {
 	}
 
 	@GetMapping("/{id}")
-	public Student getById(@ApiParam(value = "Id of the Student", required = true) @PathVariable UUID id) {
+	public Student getById(@ApiParam(value = "Id of the Student", required = true) @PathVariable Long id) {
 		var response = studentService.getById(id);
 
 		if (response == null) {
@@ -47,22 +48,23 @@ public class StudentsController {
 		return response;
 	}
 
-	@PostMapping("/")
-	public Student addNewStudent(@RequestBody AddStudentRequest request) {
-		if (request.getFirstName().isEmpty() || request.getLastName().isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Firstname and Lastname are manadatory");
-		}
+	@GetMapping("/name/{firstName}")
+	public Collection<Student> getByFirstName(@PathVariable String firstName) {
+		return studentService.getByFirstName(firstName);
+	}
 
+	@PostMapping("/")
+	public Student addNewStudent(@Valid @RequestBody AddStudentRequest request) {
 		return studentService.addStudent(request);
 	}
 
 	@PutMapping("/{id}")
-	public Student updateStudent(@PathVariable UUID id, @RequestBody UpdateStudentRequest request) {
+	public Student updateStudent(@PathVariable Long id, @Valid @RequestBody UpdateStudentRequest request) {
 		return studentService.updateStudent(id, request);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteStudent(@PathVariable UUID id) {
+	public void deleteStudent(@PathVariable Long id) {
 		studentService.deleteStudent(id);
 	}
 

@@ -1,13 +1,11 @@
 package com.example.entities;
 
-import java.util.UUID;
-
 import lombok.Data;
 
 @Data
 public class Course {
 
-    private UUID id;
+    private Long id;
     private String name;
 
 }

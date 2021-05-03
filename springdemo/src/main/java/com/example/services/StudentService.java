@@ -3,15 +3,15 @@ package com.example.services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.example.entities.Address;
 import com.example.entities.Course;
 import com.example.entities.Student;
-import com.example.repositories.StudentInMemoryRepository;
+import com.example.repositories.StudentRepository;
 import com.example.requests.AddStudentRequest;
 import com.example.requests.UpdateStudentRequest;
 
@@ -19,14 +19,19 @@ import com.example.requests.UpdateStudentRequest;
 public class StudentService {
 
 	@Autowired
-	private StudentInMemoryRepository studentRepo;
+	private StudentRepository studentRepo;
 
 	public Collection<Student> getAll() {
-		return studentRepo.getAll();
+		Sort sort = Sort.by(Sort.Direction.DESC, "firstName");
+		return studentRepo.findAll(sort);
 	}
 
-	public Student getById(UUID id) {
-		return studentRepo.getById(id);
+	public Student getById(Long id) {
+		return studentRepo.findById(id).get();
+	}
+
+	public Collection<Student> getByFirstName(String firstName) {
+		return studentRepo.findByFirstName(firstName);
 	}
 
 	public Student addStudent(AddStudentRequest request) {
@@ -36,39 +41,36 @@ public class StudentService {
 		if (request.getCourses().size() > 0) {
 			for (Course course : request.getCourses()) {
 				var newCourse = new Course();
-				newCourse.setId(UUID.randomUUID());
 				newCourse.setName(course.getName() != null ? course.getName() : "NoName!");
 				courses.add(newCourse);
 			}
 		}
 
 		var address = new Address();
-		address.setId(UUID.randomUUID());
 		address.setCity(request.getCity());
 		address.setStreet(request.getStreet());
 
 		var student = new Student();
-		student.setId(UUID.randomUUID());
 		student.setFirstName(request.getFirstName());
 		student.setLastName(request.getLastName());
 		student.setCreatedAt(new Date());
 
-		student.setAddress(address);
+		// student.setAddress(address);
 
-		student.setCourses(courses);
+		// student.setCourses(courses);
 
-		return studentRepo.addStudent(student);
+		return studentRepo.save(student);
 	}
 
-	public Student updateStudent(UUID id, UpdateStudentRequest request) {
-		var student = studentRepo.getById(id);
+	public Student updateStudent(Long id, UpdateStudentRequest request) {
+		var student = studentRepo.findById(id).get();
 		student.setLastName(request.getLastName());
 		student.setUpdatedAt(new Date());
-		return studentRepo.updateStudent(id, student);
+		return studentRepo.save(student);
 	}
 
-	public void deleteStudent(UUID id) {
-		studentRepo.deleteStudent(id);
+	public void deleteStudent(Long id) {
+		studentRepo.deleteById(id);
 	}
 
 }
