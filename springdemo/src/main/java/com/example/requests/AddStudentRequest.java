@@ -27,6 +27,6 @@ public class AddStudentRequest {
 	private String city;
 	private String street;
 
-	private List<Course> courses;
+	private List<AddCourseRequest> courses;
 
 }

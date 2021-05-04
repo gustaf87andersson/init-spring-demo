@@ -1,5 +1,6 @@
 package com.example.entities;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -8,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModel;
@@ -44,10 +48,11 @@ public class Student {
 	@Column(name = "updated_at")
 	private Date updatedAt;
 
-	// one.to.one
-	//private Address address;
+	@OneToOne
+	@JoinColumn(name = "address_id")
+	private Address address;
 
-	// many.to.one
-	//private List<Course> courses;
+	@OneToMany(mappedBy = "student")
+	private Collection<Course> courses;
 
 }

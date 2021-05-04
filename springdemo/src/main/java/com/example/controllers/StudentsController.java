@@ -53,6 +53,11 @@ public class StudentsController {
 		return studentService.getByFirstName(firstName);
 	}
 
+	@GetMapping("/city/{city}")
+	public Collection<Student> getByCity(@PathVariable String city) {
+		return studentService.getByCity(city);
+	}
+
 	@PostMapping("/")
 	public Student addNewStudent(@Valid @RequestBody AddStudentRequest request) {
 		return studentService.addStudent(request);
