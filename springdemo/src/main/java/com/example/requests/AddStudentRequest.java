@@ -2,6 +2,8 @@ package com.example.requests;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 import com.example.entities.Course;
 
 import io.swagger.annotations.ApiModel;
@@ -15,8 +17,11 @@ import lombok.Setter;
 public class AddStudentRequest {
 
 	@ApiModelProperty(notes = "The FirstName of the Student")
+	@NotBlank(message = "FirstName is mandatory")
 	private String firstName;
+
 	@ApiModelProperty(notes = "The LastName of the Student")
+	@NotBlank(message = "LastName is mandatory")
 	private String lastName;
 
 	private String city;

@@ -1,6 +1,5 @@
 package com.example.entities;
 
-import java.util.UUID;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class Address {
 
-    private UUID id;
+    private Long id;
     private String street;
     private String city;
 
