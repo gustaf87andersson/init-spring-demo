@@ -4,8 +4,11 @@ import java.util.Collections;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
@@ -15,7 +18,9 @@ import static springfox.documentation.builders.PathSelectors.regex;
 
 @SpringBootApplication
 @EnableSwagger2
-@ComponentScan({ "com.example.controllers", "com.example.services", "com.example.repositories" })
+@ComponentScan({ "com.example.controllers", "com.example.services" })
+@EntityScan("com.example.entities")
+@EnableJpaRepositories("com.example.repositories")
 public class SpringdemoApplication {
 
 	public static void main(String[] args) {
