@@ -90,8 +90,14 @@ public class StudentService {
 	}
 
 	public void deleteStudent(Long id) {
-		studentRepo.deleteById(id);
-		logger.info("Deleted student with Id: " + id);
+		try {
+			studentRepo.deleteById(id);
+			logger.info("Deleted student with Id: " + id);
+		}
+		catch(Exception ex){
+			logger.error("Failed to delete student with id " + id, ex);
+		}
+		
 	}
 
 }
