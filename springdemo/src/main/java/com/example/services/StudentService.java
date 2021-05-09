@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 import com.example.entities.Address;
 import com.example.entities.Course;
 import com.example.entities.Student;
+import com.example.repositories.AddressSqlRepository;
+import com.example.repositories.CourseSqlRepository;
 import com.example.repositories.StudentSqlRepository;
+import com.example.requests.AddCourseRequest;
 import com.example.requests.AddStudentRequest;
 import com.example.requests.UpdateStudentRequest;
 
@@ -20,6 +23,12 @@ public class StudentService {
 
 	@Autowired
 	private StudentSqlRepository studentRepo;
+
+	@Autowired
+	private AddressSqlRepository addressRepo;
+
+	@Autowired
+	private CourseSqlRepository courseRepo;
 
 	public Collection<Student> getAll() {
 		Sort sort = Sort.by(Sort.Direction.ASC, "firstName");
@@ -34,32 +43,37 @@ public class StudentService {
 		return studentRepo.findByFirstName(firstName);
 	}
 
-	public Student addStudent(AddStudentRequest request) {
+	public Collection<Student> getByCity(String city){
+		return studentRepo.findByAddressCity(city);
+	}
 
-		// var courses = new ArrayList<Course>();
+	public Student addStudent(AddStudentRequest request) {	
 
-		// if (request.getCourses().size() > 0) {
-		// 	for (Course course : request.getCourses()) {
-		// 		var newCourse = new Course();
-		// 		newCourse.setName(course.getName() != null ? course.getName() : "NoName!");
-		// 		courses.add(newCourse);
-		// 	}
-		// }
-
-		// var address = new Address();
-		// address.setCity(request.getCity());
-		// address.setStreet(request.getStreet());
+		var address = new Address();
+		address.setCity(request.getCity());
+		address.setStreet(request.getStreet());
+		address = addressRepo.save(address);
 
 		var student = new Student();
 		student.setFirstName(request.getFirstName());
 		student.setLastName(request.getLastName());
 		student.setCreatedAt(new Date());
+		student.setAddress(address);
+		student = studentRepo.save(student);
 
-		//student.setAddress(address);
+		if (request.getCourses().size() > 0) {
+			var courses = new ArrayList<Course>();
+			for (AddCourseRequest course : request.getCourses()) {
+				var newCourse = new Course();
+				newCourse.setName(course.getName() != null ? course.getName() : "NoName!");
+				newCourse.setStudent(student);
+				courses.add(newCourse);
+			}
+			courseRepo.saveAll(courses);
+			student.setCourses(courses);
+		}		
 
-		//student.setCourses(courses);
-
-		return studentRepo.save(student);
+		return student;
 	}
 
 	public Student updateStudent(Long id, UpdateStudentRequest request) {

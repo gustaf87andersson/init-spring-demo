@@ -1,11 +1,8 @@
 package com.example.requests;
 
-import java.util.List;
-
 import javax.validation.constraints.NotBlank;
 
-import com.example.entities.Course;
-
+import java.util.List;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -27,6 +24,6 @@ public class AddStudentRequest {
 	private String city;
 	private String street;
 
-	private List<Course> courses;
+	private List<AddCourseRequest> courses;
 
 }
