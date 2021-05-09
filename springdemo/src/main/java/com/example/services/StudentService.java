@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ import com.example.requests.UpdateStudentRequest;
 
 @Service
 public class StudentService {
+
+	Logger logger = LoggerFactory.getLogger(StudentService.class);
 
 	@Autowired
 	private StudentSqlRepository studentRepo;
@@ -73,6 +77,7 @@ public class StudentService {
 			student.setCourses(courses);
 		}		
 
+		logger.info("Created new student: " + student.toString());
 		return student;
 	}
 
@@ -80,11 +85,13 @@ public class StudentService {
 		var student = studentRepo.findById(id).get();
 		student.setLastName(request.getLastName());
 		student.setUpdatedAt(new Date());
+		logger.info("Updated Student");
 		return studentRepo.save(student);
 	}
 
 	public void deleteStudent(Long id) {
 		studentRepo.deleteById(id);
+		logger.info("Deleted student with Id: " + id);
 	}
 
 }

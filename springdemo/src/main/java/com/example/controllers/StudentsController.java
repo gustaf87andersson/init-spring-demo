@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,12 +30,16 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/api/students/")
 public class StudentsController {
 
+	// Error > Warn > Info > Debug > Trace
+	Logger logger = LoggerFactory.getLogger(StudentsController.class);
+
 	@Autowired
 	private StudentService studentService;
 
 	@GetMapping("/")
 	@ApiOperation(value = "Get all Students", notes = "Fetches all students in Students API", response = Student.class, responseContainer = "List")
 	public Collection<Student> getAll() {
+		logger.info("Fetching all Students");
 		return studentService.getAll();
 	}
 
@@ -42,6 +48,7 @@ public class StudentsController {
 		var response = studentService.getById(id);
 
 		if (response == null) {
+			logger.warn("Couldnt find any student with id " + id);
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldnt find any student with provided ID");
 		}
 
@@ -60,11 +67,13 @@ public class StudentsController {
 
 	@PostMapping("/")
 	public Student addNewStudent(@Valid @RequestBody AddStudentRequest request) {
+		logger.info("Adding new Student");
 		return studentService.addStudent(request);
 	}
 
 	@PutMapping("/{id}")
 	public Student updateStudent(@PathVariable Long id, @RequestBody UpdateStudentRequest request) {
+		logger.info("Updating Student all Students");
 		return studentService.updateStudent(id, request);
 	}
 
