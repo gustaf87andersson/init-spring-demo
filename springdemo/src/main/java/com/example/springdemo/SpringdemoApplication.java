@@ -18,7 +18,7 @@ import static springfox.documentation.builders.PathSelectors.regex;
 
 @SpringBootApplication
 @EnableSwagger2
-@ComponentScan({ "com.example.controllers", "com.example.services" })
+@ComponentScan({ "com.example.controllers", "com.example.services", "com.example.aop" })
 @EntityScan("com.example.entities")
 @EnableJpaRepositories("com.example.repositories")
 public class SpringdemoApplication {

@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,8 +30,22 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/api/students/")
 public class StudentsController {
 
+	Logger logger = LoggerFactory.getLogger(StudentsController.class);
+
 	@Autowired
 	private StudentService studentService;
+
+	@GetMapping("/log")
+	public String testLogging(){
+		// Error > Warn > Info > Debug > Trace
+		logger.trace("Nice TRACE Logging");
+		logger.debug("Nice DEBUG Logging");
+		logger.info("Nice INFO Logging");
+		logger.warn("Nice WARN logging");
+		logger.error("Nice ERROR Logging");
+
+		return "Logging works super!";
+	}
 
 	@GetMapping("/")
 	@ApiOperation(value = "Get all Students", notes = "Fetches all students in Students API", response = Student.class, responseContainer = "List")
@@ -42,6 +58,7 @@ public class StudentsController {
 		var response = studentService.getById(id);
 
 		if (response == null) {
+			logger.warn("Couldnt find student with id: " + id);
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Couldnt find any student with provided ID");
 		}
 
