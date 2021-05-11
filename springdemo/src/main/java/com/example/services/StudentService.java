@@ -6,9 +6,10 @@ import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 import com.example.entities.Address;
 import com.example.entities.Course;
@@ -21,18 +22,19 @@ import com.example.requests.AddStudentRequest;
 import com.example.requests.UpdateStudentRequest;
 
 @Service
+@RequiredArgsConstructor
 public class StudentService {
 
 	Logger logger = LoggerFactory.getLogger(StudentService.class);
+	private final StudentSqlRepository studentRepo;
+	private final AddressSqlRepository addressRepo;
+	private final CourseSqlRepository courseRepo;
 
-	@Autowired
-	private StudentSqlRepository studentRepo;
-
-	@Autowired
-	private AddressSqlRepository addressRepo;
-
-	@Autowired
-	private CourseSqlRepository courseRepo;
+	// public StudentService(StudentSqlRepository studentRepo, AddressSqlRepository addressRepo, CourseSqlRepository courseRepo){
+	// 	this.studentRepo = studentRepo;
+	// 	this.addressRepo = addressRepo;
+	// 	this.courseRepo = courseRepo;
+	// }	
 
 	public Collection<Student> getAll() {
 		Sort sort = Sort.by(Sort.Direction.ASC, "firstName");

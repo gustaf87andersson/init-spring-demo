@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +31,11 @@ public class StudentsController {
 
 	Logger logger = LoggerFactory.getLogger(StudentsController.class);
 
-	@Autowired
 	private StudentService studentService;
+
+	public StudentsController(StudentService studentService){
+		this.studentService = studentService;
+	}	
 
 	@GetMapping("/log")
 	public String testLogging(){

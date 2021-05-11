@@ -32,7 +32,7 @@ public class Student {
 	private Long id;
 
 	@ApiModelProperty(notes = "The FirstName of the Student")
-	@Column(name = "first_name")
+	@Column(name = "firstName") // -> "first_name"
 	private String firstName;
 
 	@ApiModelProperty(notes = "The LastName of the Student")
