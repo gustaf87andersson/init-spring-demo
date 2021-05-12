@@ -6,7 +6,6 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,15 +24,15 @@ import com.example.services.StudentService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/students/")
 public class StudentsController {
 
 	Logger logger = LoggerFactory.getLogger(StudentsController.class);
-
-	@Autowired
-	private StudentService studentService;
+	private final StudentService studentService;
 
 	@GetMapping("/log")
 	public String testLogging(){
