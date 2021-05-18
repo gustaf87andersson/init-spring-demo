@@ -34,7 +34,7 @@ public class StudentsController {
 	Logger logger = LoggerFactory.getLogger(StudentsController.class);
 	private final StudentService studentService;
 
-	@GetMapping("/log")
+	@GetMapping("/log") 
 	public String testLogging(){
 		// Error > Warn > Info > Debug > Trace
 		logger.trace("Nice TRACE Logging");
